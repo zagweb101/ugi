@@ -19,8 +19,8 @@ export async function POST(request: NextRequest) {
           id: "stu_001",
           universityId,
           firstName: "محمد",
-          lastName: "أحمد",
-          email: "mohammed.ahmed@ugi.edu.sa",
+          lastName: "زغلول",
+          email: "mohamed.zaghloul@ugi.edu.sa",
         },
       },
       { status: 200 }
