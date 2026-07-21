@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#FFD600" rx="64"/>
+  <text x="256" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="128" fill="#000000">UGI</text>
+  <text x="256" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="64" fill="#000000">LEARN</text>
+  <rect x="100" y="370" width="312" height="12" fill="#00C853" rx="6"/>
+</svg>

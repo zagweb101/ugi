@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,6 @@ import {
   ClipboardList,
   Trophy,
   Award,
-  Menu,
   X,
   LogOut,
   ChevronLeft,
@@ -28,82 +27,67 @@ const navItems = [
   { href: "/grades", label: "الدرجات", icon: Award, color: "bg-swiss-blue" },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <>
-      <button
-        onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed top-4 right-4 z-50 p-3 bg-swiss-yellow text-swiss-black font-bold shadow-swiss-lg hover:shadow-swiss-xl transition-all duration-200 hover:-translate-y-1 active:translate-y-0"
-      >
-        <Menu className="w-5 h-5" />
-      </button>
-
-      {mobileOpen && (
+      {/* Mobile overlay */}
+      {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/30 z-40 animate-fade-in"
-          onClick={() => setMobileOpen(false)}
+          className="lg:hidden fixed inset-0 bg-black/40 z-40 animate-fade-in backdrop-blur-sm"
+          onClick={onClose}
         />
       )}
 
+      {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 right-0 h-full z-50 bg-white border-l-4 border-swiss-yellow transition-all duration-300 flex flex-col shadow-swiss-2xl",
-          collapsed ? "w-20" : "w-80",
-          mobileOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
+          "fixed top-0 right-0 h-[100dvh] z-50 bg-white border-l-4 border-swiss-yellow transition-all duration-300 flex flex-col shadow-swiss-2xl",
+          "w-80",
+          isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
         )}
       >
-        <div className="flex items-center justify-between p-5 border-b-4 border-swiss-green">
-          {!collapsed && (
-            <div className="flex items-center gap-3 animate-fade-in">
-              <div className="w-12 h-12 bg-swiss-yellow flex items-center justify-center shadow-swiss-lg animate-float">
-                <span className="text-swiss-black font-bold text-lg">UGI</span>
-              </div>
-              <div>
-                <h1 className="text-swiss-black font-bold text-xl uppercase tracking-wider">UGI Learn</h1>
-                <p className="text-swiss-gray-lighter text-xs uppercase tracking-widest">الجامعة الألمانية الذكية</p>
-              </div>
+        {/* Header */}
+        <div className="flex items-center justify-between p-5 border-b-4 border-swiss-green flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-swiss-yellow flex items-center justify-center shadow-swiss-lg animate-float">
+              <span className="text-swiss-black font-bold text-lg">UGI</span>
             </div>
-          )}
-          {collapsed && (
-            <div className="w-12 h-12 bg-swiss-yellow flex items-center justify-center mx-auto shadow-swiss-lg animate-float">
-              <span className="text-swiss-black font-bold text-sm">UGI</span>
+            <div>
+              <h1 className="text-swiss-black font-bold text-xl uppercase tracking-wider">UGI Learn</h1>
+              <p className="text-swiss-gray-lighter text-xs uppercase tracking-widest">الجامعة الألمانية الذكية</p>
             </div>
-          )}
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="lg:hidden p-2 hover:bg-swiss-gray text-swiss-gray-lighter transition-all duration-200"
-            >
-              <X className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => setCollapsed(!collapsed)}
-              className="hidden lg:flex p-2 hover:bg-swiss-gray text-swiss-gray-lighter transition-all duration-200 hover:rotate-180"
-            >
-              <ChevronLeft className={cn("w-4 h-4 transition-transform duration-300", collapsed && "rotate-180")} />
-            </button>
           </div>
+          <button
+            onClick={onClose}
+            className="lg:hidden p-2 hover:bg-swiss-gray text-swiss-gray-lighter transition-all duration-200"
+            aria-label="إغلاق القائمة"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
-        <nav className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
-          {navItems.map((item, index) => {
+        {/* Navigation */}
+        <nav className="flex-1 py-6 px-4 space-y-2 overflow-y-auto overscroll-contain">
+          {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={onClose}
                 className={cn(
-                  "flex items-center gap-4 px-5 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 group animate-fade-in-right stagger-" + (index + 1),
+                  "flex items-center gap-4 px-5 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 group",
                   isActive
                     ? "bg-swiss-yellow text-swiss-black border-l-4 border-swiss-green shadow-swiss-lg"
-                    : "text-swiss-gray-lighter hover:bg-swiss-gray hover:text-swiss-black border-l-4 border-transparent hover:shadow-swiss hover:-translate-x-1"
+                    : "text-swiss-gray-lighter hover:bg-swiss-gray hover:text-swiss-black border-l-4 border-transparent hover:shadow-swiss active:scale-[0.98]"
                 )}
-                title={collapsed ? item.label : undefined}
               >
                 <div className={cn(
                   "w-10 h-10 flex items-center justify-center flex-shrink-0 transition-all duration-200",
@@ -114,28 +98,25 @@ export function Sidebar() {
                     isActive ? "text-swiss-black" : "text-swiss-gray-lighter group-hover:text-swiss-black"
                   )} />
                 </div>
-                {!collapsed && <span>{item.label}</span>}
+                <span>{item.label}</span>
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-3 border-t-4 border-swiss-pink">
-          <div className={cn("flex items-center gap-3 px-4 py-3 bg-swiss-gray shadow-inner-light", collapsed && "justify-center")}>
+        {/* User */}
+        <div className="p-4 border-t-4 border-swiss-pink flex-shrink-0">
+          <div className="flex items-center gap-3 px-4 py-3 bg-swiss-gray shadow-inner-light">
             <div className="w-10 h-10 bg-swiss-green flex items-center justify-center flex-shrink-0 shadow-swiss">
               <span className="text-swiss-black text-xs font-bold">م</span>
             </div>
-            {!collapsed && (
-              <div className="flex-1 min-w-0 animate-fade-in">
-                <p className="text-swiss-black text-sm font-bold uppercase tracking-wider">محمد زغلول</p>
-                <p className="text-swiss-gray-lighter text-xs tracking-widest">202400123</p>
-              </div>
-            )}
-            {!collapsed && (
-              <button className="p-2 hover:bg-swiss-gray text-swiss-gray-lighter hover:text-swiss-pink transition-all duration-200 hover:scale-110">
-                <LogOut className="w-4 h-4" />
-              </button>
-            )}
+            <div className="flex-1 min-w-0">
+              <p className="text-swiss-black text-sm font-bold uppercase tracking-wider">محمد زغلول</p>
+              <p className="text-swiss-gray-lighter text-xs tracking-widest">202400123</p>
+            </div>
+            <button className="p-2 hover:bg-swiss-gray text-swiss-gray-lighter hover:text-swiss-pink transition-all duration-200" aria-label="تسجيل الخروج">
+              <LogOut className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </aside>

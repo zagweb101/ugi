@@ -457,3 +457,73 @@ html {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ===== MOBILE-FIRST / PWA / RESPONSIVE ===== */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+  min-height: 100dvh;
+}
+
+/* Safe area for notched devices */
+@supports (padding: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Hide sidebar on mobile, show as overlay */
+@media (max-width: 1023px) {
+  .sidebar-desktop {
+    transform: translateX(100%);
+  }
+  .sidebar-desktop.open {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile-first grid adjustments */
+@media (max-width: 640px) {
+  .mobile-stack {
+    flex-direction: column;
+  }
+  .mobile-full {
+    width: 100%;
+  }
+  .mobile-p-4 {
+    padding: 1rem;
+  }
+}
+
+/* Touch-friendly tap targets (minimum 44px) */
+button, a, input, select, textarea {
+  min-height: 44px;
+}
+
+/* PWA standalone mode adjustments */
+@media (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
