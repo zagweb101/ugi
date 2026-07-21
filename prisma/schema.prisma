@@ -1,0 +1,219 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Student {
+  id            String    @id @default(uuid())
+  universityId  String    @unique
+  firstName     String
+  lastName      String
+  email         String    @unique
+  passwordHash  String
+  avatar        String?
+  major         String?
+  year          Int       @default(1)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  enrollments      Enrollment[]
+  lectures         Lecture[]
+  assignments      Assignment[]
+  submissions      Submission[]
+  examResults      ExamResult[]
+  notifications    Notification[]
+  scheduleItems    ScheduleItem[]
+}
+
+model Instructor {
+  id            String    @id @default(uuid())
+  firstName     String
+  lastName      String
+  email         String    @unique
+  department    String?
+  phone         String?
+  office        String?
+  avatar        String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  courses       Course[]
+  lectures      Lecture[]
+}
+
+model Course {
+  id            String    @id @default(uuid())
+  code          String    @unique
+  name          String
+  description   String?
+  credits       Int       @default(3)
+  semester      String?
+  color         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  instructorId  String?
+  instructor    Instructor? @relation(fields: [instructorId], references: [id])
+
+  enrollments   Enrollment[]
+  lectures      Lecture[]
+  assignments   Assignment[]
+  exams         Exam[]
+  examsQuizzes   ExamsQuizzes[]
+  scheduleItems ScheduleItem[]
+}
+
+model Enrollment {
+  id        String   @id @default(uuid())
+  grade     String?
+  status    String   @default("active")
+  enrolledAt DateTime @default(now())
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+  courseId  String
+  course    Course  @relation(fields: [courseId], references: [id])
+
+  @@unique([studentId, courseId])
+}
+
+model Lecture {
+  id            String    @id @default(uuid())
+  number        Int
+  title         String
+  date          DateTime
+  notes         String?
+  recordingLink String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  studentId     String
+  student       Student  @relation(fields: [studentId], references: [id])
+  courseId       String
+  course        Course   @relation(fields: [courseId], references: [id])
+  instructorId  String?
+  instructor    Instructor? @relation(fields: [instructorId], references: [id])
+
+  attachments    Attachment[]
+}
+
+model Attachment {
+  id          String   @id @default(uuid())
+  fileName    String
+  fileUrl     String
+  fileType    String
+  fileSize    Int
+  createdAt   DateTime @default(now())
+
+  lectureId   String
+  lecture     Lecture  @relation(fields: [lectureId], references: [id])
+}
+
+model Assignment {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  dueDate     DateTime
+  maxScore    Int       @default(100)
+  status      String    @default("pending")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id])
+  courseId     String
+  course      Course    @relation(fields: [courseId], references: [id])
+
+  submissions Submission[]
+}
+
+model Submission {
+  id          String   @id @default(uuid())
+  fileUrl     String?
+  content     String?
+  score       Int?
+  feedback    String?
+  submittedAt DateTime @default(now())
+
+  assignmentId String
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+  studentId    String
+  student      Student    @relation(fields: [studentId], references: [id])
+}
+
+model Exam {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  examDate    DateTime
+  duration    Int
+  maxScore    Int       @default(100)
+  location    String?
+  createdAt   DateTime  @default(now())
+
+  courseId     String
+  course      Course    @relation(fields: [courseId], references: [id])
+
+  results     ExamResult[]
+}
+
+model ExamResult {
+  id        String   @id @default(uuid())
+  score     Int
+  grade     String?
+  createdAt DateTime @default(now())
+
+  examId    String
+  exam      Exam     @relation(fields: [examId], references: [id])
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id])
+
+  @@unique([examId, studentId])
+}
+
+model ExamsQuizzes {
+  id          String    @id @default(uuid())
+  title       String
+  type        String    @default("exam")
+  description String?
+  date        DateTime
+  duration    Int?
+  maxScore    Int       @default(100)
+  score       Int?
+  status      String    @default("upcoming")
+  location    String?
+  createdAt   DateTime  @default(now())
+
+  courseId     String
+  course      Course    @relation(fields: [courseId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  type      String   @default("info")
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id])
+}
+
+model ScheduleItem {
+  id        String   @id @default(uuid())
+  dayOfWeek Int
+  startTime String
+  endTime   String
+  location  String?
+  type      String   @default("lecture")
+
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+}
