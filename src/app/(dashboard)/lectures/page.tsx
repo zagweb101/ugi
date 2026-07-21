@@ -285,7 +285,7 @@ export default function LecturesPage() {
   }, [lectures, searchQuery, filterCourse]);
 
   return (
-    <div className="min-h-screen bg-swiss-gray p-6" dir="rtl">
+    <div className="min-h-screen bg-swiss-gray p-4 sm:p-6 overflow-x-hidden" dir="rtl">
       <Toaster
         position="top-center"
         toastOptions={{
@@ -302,16 +302,16 @@ export default function LecturesPage() {
       />
 
       {selectedLecture && (
-        <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center p-4" onClick={() => setSelectedLecture(null)}>
-          <div className="bg-white border-4 border-swiss-yellow w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-xl" onClick={e => e.stopPropagation()}>
-            <div className="sticky top-0 bg-white border-b-4 border-swiss-green p-6 flex items-center justify-between z-10">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-swiss-yellow flex items-center justify-center">
-                  <span className="text-swiss-black font-bold text-2xl">{selectedLecture.number}</span>
+        <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center p-2 sm:p-4" onClick={() => setSelectedLecture(null)}>
+          <div className="bg-white border-4 border-swiss-yellow w-full max-w-4xl max-h-[90vh] overflow-y-auto overflow-x-hidden shadow-xl" onClick={e => e.stopPropagation()}>
+            <div className="sticky top-0 bg-white border-b-4 border-swiss-green p-4 sm:p-6 flex items-center justify-between z-10">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-swiss-yellow flex items-center justify-center flex-shrink-0">
+                  <span className="text-swiss-black font-bold text-xl sm:text-2xl">{selectedLecture.number}</span>
                 </div>
-                <div>
-                  <h2 className="text-swiss-black font-bold text-xl uppercase tracking-wider">{selectedLecture.title}</h2>
-                  <p className="text-swiss-gray-lighter text-sm uppercase tracking-widest">{selectedLecture.course} — {selectedLecture.instructor}</p>
+                <div className="min-w-0">
+                  <h2 className="text-swiss-black font-bold text-base sm:text-xl uppercase tracking-wider truncate">{selectedLecture.title}</h2>
+                  <p className="text-swiss-gray-lighter text-xs sm:text-sm uppercase tracking-widest truncate">{selectedLecture.course} — {selectedLecture.instructor}</p>
                 </div>
               </div>
               <Button variant="ghost" size="sm" onClick={() => setSelectedLecture(null)} className="text-swiss-gray-lighter hover:text-swiss-yellow">
@@ -319,10 +319,10 @@ export default function LecturesPage() {
               </Button>
             </div>
 
-            <div className="p-6 space-y-8">
-              <div className="bg-swiss-gray border-r-4 border-swiss-yellow p-5">
-                <h3 className="text-swiss-black font-bold text-xl uppercase tracking-wider mb-2">المعلومات الأساسية</h3>
-                <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="p-4 sm:p-6 space-y-8">
+              <div className="bg-swiss-gray border-r-4 border-swiss-yellow p-4 sm:p-5">
+                <h3 className="text-swiss-black font-bold text-lg sm:text-xl uppercase tracking-wider mb-2">المعلومات الأساسية</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div><span className="font-bold text-swiss-yellow">المقرر:</span> <span className="text-swiss-gray-lighter">{selectedLecture.course}</span></div>
                   <div><span className="font-bold text-swiss-green">المحاضر:</span> <span className="text-swiss-gray-lighter">{selectedLecture.instructor}</span></div>
                   <div><span className="font-bold text-swiss-blue">رقم المحاضرة:</span> <span className="text-swiss-gray-lighter">{selectedLecture.number}</span></div>
@@ -335,9 +335,9 @@ export default function LecturesPage() {
                   <BookOpen className="w-5 h-5" />
                   المحور الأول: كيف تحول الإعلام من "خطي" إلى "تفاعلي"؟
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-swiss-gray border-r-4 border-swiss-pink p-4">
-                    <h4 className="text-swiss-pink font-bold text-sm uppercase tracking-wider mb-2">في الإعلام التقليدي (التلفزيون، الصحف، الراديو)</h4>
+                    <h4 className="text-swiss-pink font-bold text-xs sm:text-sm uppercase tracking-wider mb-2">في الإعلام التقليدي (التلفزيون، الصحف، الراديو)</h4>
                     <ul className="space-y-2 text-sm text-swiss-gray-lighter">
                       <li className="flex items-start gap-2"><span className="text-swiss-pink font-bold">•</span> <span><strong className="text-swiss-black">الاتجاه:</strong> أحادي الجانب (من المصدر إلى الجمهور فقط)</span></li>
                       <li className="flex items-start gap-2"><span className="text-swiss-pink font-bold">•</span> <span><strong className="text-swiss-black">الدور:</strong> المرسل ينشر والجمهور يستهلك فقط دون قدرة على الرد</span></li>
@@ -345,7 +345,7 @@ export default function LecturesPage() {
                     </ul>
                   </div>
                   <div className="bg-swiss-gray border-r-4 border-swiss-green p-4">
-                    <h4 className="text-swiss-green font-bold text-sm uppercase tracking-wider mb-2">في الإعلام الرقمي (السوشيال ميديا، الصحافة الرقمية)</h4>
+                    <h4 className="text-swiss-green font-bold text-xs sm:text-sm uppercase tracking-wider mb-2">في الإعلام الرقمي (السوشيال ميديا، الصحافة الرقمية)</h4>
                     <ul className="space-y-2 text-sm text-swiss-gray-lighter">
                       <li className="flex items-start gap-2"><span className="text-swiss-green font-bold">•</span> <span><strong className="text-swiss-black">الاتجاه:</strong> متعدد الأطراف دائري (Networked & Interactive)</span></li>
                       <li className="flex items-start gap-2"><span className="text-swiss-green font-bold">•</span> <span><strong className="text-swiss-black">الدور:</strong> المتابع يتحول إلى صانع محتوى (Prosumer)</span></li>
@@ -360,7 +360,7 @@ export default function LecturesPage() {
                   <BookOpen className="w-5 h-5" />
                   المحور الثاني: الخصائص الجوهرية للوسائط الرقمية
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="bg-swiss-gray border-t-4 border-swiss-yellow p-4">
                     <h4 className="text-swiss-yellow font-bold text-sm uppercase tracking-wider mb-2">الوسائط المتعددة</h4>
                     <p className="text-swiss-gray-lighter text-sm">Multimedia Integration - المحتوى الناجح يدمج النص والصوت والصور والفيديو التفاعلي لتعزيز الفكرة.</p>
@@ -382,11 +382,11 @@ export default function LecturesPage() {
                   المحور الثالث: نموذج الاتصال الجديد
                 </h3>
                 <div className="bg-swiss-gray border-2 border-swiss-border p-5">
-                  <div className="text-center font-mono text-sm text-swiss-black bg-white p-4 border-2 border-swiss-border">
-                    <p className="mb-2">[صانع المحتوى / المنصة] ────(رسالة وسائط متعددة)────► [المستقبل / الجمهور]</p>
-                    <p className="text-swiss-gray-lighter">▲ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; │</p>
-                    <p className="text-swiss-gray-lighter">│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; │</p>
-                    <p className="text-swiss-yellow font-bold">└─────────────(تفاعل / رجع صدى لحظي Feedback)─────────┘</p>
+                  <div className="text-center font-mono text-xs sm:text-sm text-swiss-black bg-white p-4 border-2 border-swiss-border overflow-x-auto">
+                    <p className="mb-2 whitespace-nowrap">[صانع المحتوى / المنصة] ────(رسالة وسائط متعددة)────► [المستقبل / الجمهور]</p>
+                    <p className="text-swiss-gray-lighter whitespace-nowrap">▲ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; │</p>
+                    <p className="text-swiss-gray-lighter whitespace-nowrap">│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; │</p>
+                    <p className="text-swiss-yellow font-bold whitespace-nowrap">└─────────────(تفاعل / رجع صدى لحظي Feedback)─────────┘</p>
                   </div>
                 </div>
               </div>
@@ -397,7 +397,7 @@ export default function LecturesPage() {
                 </h3>
                 <div className="bg-swiss-gray border-r-4 border-swiss-pink p-5">
                   <p className="text-swiss-black text-sm mb-4">تخيل أن هناك حدثًا هامًا (مثل إطلاق منتج جديد أو افتتاح معرض تقني):</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="bg-white border-2 border-swiss-border p-4">
                       <h4 className="text-swiss-pink font-bold text-sm uppercase tracking-wider mb-2">صياغة خبر تقليدي</h4>
                       <p className="text-swiss-gray-lighter text-sm">اكتب جملة واحدة لكيفية تغطية هذا الحدث في مانشيت صحيفة ورقية.</p>
@@ -416,11 +416,11 @@ export default function LecturesPage() {
                     <Paperclip className="w-5 h-5" />
                     الملفات المرفقة ({selectedLecture.attachments.length})
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {selectedLecture.attachments.map((att) => (
                       <div
                         key={att.name}
-                        className="flex items-center gap-3 p-4 bg-swiss-gray border-2 border-swiss-border hover:border-swiss-yellow transition-colors group cursor-pointer"
+                        className="flex items-center gap-3 p-3 sm:p-4 bg-swiss-gray border-2 border-swiss-border hover:border-swiss-yellow transition-colors group cursor-pointer"
                         onClick={() => setViewingFile({ name: att.name, url: getFileUrl(selectedLecture.id, att.name) })}
                       >
                         <div className={cn(
@@ -460,12 +460,12 @@ export default function LecturesPage() {
                       return (
                         <div key={i} className={cn("bg-swiss-gray border-r-4 p-5", colors[i % colors.length])}>
                           <div className="flex items-start justify-between gap-3 mb-3">
-                            <div>
-                              <h4 className="text-swiss-black font-bold text-lg uppercase tracking-wider">{term.termAr}</h4>
-                              <p className={cn("text-sm font-bold", bgColors[i % bgColors.length], "text-swiss-black inline-block px-2 py-0.5 mt-1")}>{term.termEn} — {term.pronunciation}</p>
+                            <div className="min-w-0">
+                              <h4 className="text-swiss-black font-bold text-base sm:text-lg uppercase tracking-wider">{term.termAr}</h4>
+                              <p className={cn("text-xs sm:text-sm font-bold", bgColors[i % bgColors.length], "text-swiss-black inline-block px-2 py-0.5 mt-1")}>{term.termEn} — {term.pronunciation}</p>
                             </div>
                           </div>
-                          <div className="space-y-3 mt-4">
+                            <div className="space-y-3 mt-4">
                             <div className="bg-white/50 p-3 border-l-2 border-swiss-yellow">
                               <p className="text-swiss-yellow text-xs font-bold uppercase tracking-widest mb-1">التعريف الأكاديمي</p>
                               <p className="text-swiss-black text-sm">{term.definition}</p>
@@ -474,7 +474,7 @@ export default function LecturesPage() {
                               <p className="text-swiss-green text-xs font-bold uppercase tracking-widest mb-1">الشرح المعمق</p>
                               <p className="text-swiss-gray-lighter text-sm leading-relaxed">{term.explanation}</p>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                               <div className="bg-white/50 p-3 border-l-2 border-swiss-blue">
                                 <p className="text-swiss-blue text-xs font-bold uppercase tracking-widest mb-1">أمثلة تطبيقية</p>
                                 <p className="text-swiss-gray-lighter text-sm">{term.examples}</p>
@@ -497,20 +497,20 @@ export default function LecturesPage() {
       )}
 
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="flex items-center justify-between animate-fade-in-down">
-          <div className="flex items-center gap-5">
-            <div className="w-16 h-16 bg-swiss-yellow flex items-center justify-center shadow-swiss-lg animate-float">
-              <FileText className="w-8 h-8 text-swiss-black" />
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fade-in-down">
+          <div className="flex items-center gap-4 sm:gap-5">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-swiss-yellow flex items-center justify-center shadow-swiss-lg animate-float">
+              <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-swiss-black" />
             </div>
             <div>
-              <h1 className="text-swiss-black font-bold text-4xl uppercase tracking-wider">المحاضرات</h1>
-              <p className="text-swiss-gray-lighter text-sm uppercase tracking-widest mt-1">
+              <h1 className="text-swiss-black font-bold text-3xl sm:text-4xl uppercase tracking-wider">المحاضرات</h1>
+              <p className="text-swiss-gray-lighter text-xs sm:text-sm uppercase tracking-widest mt-1">
                 إدارة ورفع المحاضرات والمراجع
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Badge className="bg-swiss-green text-swiss-black swiss-badge px-4 py-2 text-base">
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <Badge className="bg-swiss-green text-swiss-black swiss-badge px-3 sm:px-4 py-2 text-sm sm:text-base">
               {lectures.length} محاضرة
             </Badge>
             <Button
@@ -542,7 +542,7 @@ export default function LecturesPage() {
             </CardHeader>
             <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <label className="block text-sm font-bold text-swiss-yellow uppercase tracking-widest">
                       المقرر <span className="text-swiss-pink">*</span>
@@ -706,7 +706,7 @@ export default function LecturesPage() {
                     <p className="text-sm font-bold text-swiss-green uppercase tracking-widest">
                       الملفات المحددة ({droppedFiles.length})
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {droppedFiles.map((file, index) => (
                         <div
                           key={`${file.name}-${index}`}
@@ -822,10 +822,10 @@ export default function LecturesPage() {
                   key={lecture.id}
                   className={cn("bg-swiss-gray border-4 transition-colors hover:bg-swiss-surface-light", borderColors[index % borderColors.length])}
                 >
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-start gap-4 flex-1 min-w-0">
-                        <div className={cn("w-14 h-14 flex items-center justify-center flex-shrink-0", badgeColors[index % badgeColors.length])}>
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex items-start justify-between gap-3 sm:gap-4">
+                      <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+                        <div className={cn("w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center flex-shrink-0", badgeColors[index % badgeColors.length])}>
                           <span className="font-bold text-2xl">
                             {lecture.number}
                           </span>
@@ -833,7 +833,7 @@ export default function LecturesPage() {
 
                         <div className="flex-1 min-w-0 space-y-2">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="text-swiss-black font-bold text-lg uppercase tracking-wider truncate">
+                            <h3 className="text-swiss-black font-bold text-base sm:text-lg uppercase tracking-wider truncate">
                               {lecture.title}
                             </h3>
                             <Badge className={cn("swiss-badge", badgeColors[index % badgeColors.length])}>
